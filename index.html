@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="be">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Кібербяспека для бухгалтара ў 2026</title>
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js" defer></script>
+<style>
+  :root {
+    --bg: #0b1220;
+    --surface: #111b2d;
+    --surface-2: #162033;
+    --ink: #e8ecf1;
+    --muted: #9aa3b2;
+    --border: #243049;
+    --accent: #00c2a8;
+    --accent-2: #ff7a59;
+    --danger: #ff4d4f;
+    --ok: #27c193;
+    --warn: #ffc53d;
+    --font: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font);
+    background: radial-gradient(1200px 800px at 10% -10%, rgba(0,194,168,.08), transparent),
+                radial-gradient(1000px 600px at 90% 10%, rgba(255,122,89,.07), transparent),
+                var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  a { color: var(--accent); }
+  .container { max-width: 1120px; margin: 0 auto; padding: 24px; }
+  header.site {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 18px 24px; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 50; backdrop-filter: blur(14px);
+    background: rgba(11,18,32,.65);
+  }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .2px; }
+  .brand .mark {
+    width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center;
+    background: linear-gradient(135deg, var(--accent), #00a6ff); color: #06131f; font-weight: 900;
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    border: 1px solid var(--border); color: var(--muted); background: var(--surface);
+  }
+  .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(39,193,147,.25); }
+
+  .hero {
+    padding: 56px 0 24px;
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4.2vw, 48px);
+    line-height: 1.1; font-weight: 800; letter-spacing: -.02em; margin: 0 0 14px;
+    max-width: 860px;
+  }
+  .hero .sub { color: var(--muted); font-size: clamp(15px, 1.6vw, 18px); max-width: 720px; }
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 28px;
+  }
+  .stat {
+    background: linear-gradient(180deg, rgba(22,32,51,.9), rgba(22,32,51,.55));
+    border: 1px solid var(--border); border-radius: 16px; padding: 18px;
+  }
+  .stat .num { font-size: 26px; font-weight: 800; color: var(--accent); }
+  .stat .label { color: var(--muted); font-size: 12px; margin-top: 4px; }
+
+  .section { padding: 28px 0; }
+  .section h2 { font-size: 22px; font-weight: 700; margin: 0 0 14px; }
+  .cards { display: grid; grid-template-columns: repeat(12, 1fr); gap: 14px; }
+  .card {
+    grid-column: span 6; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 18px; padding: 18px; transition: transform .08s ease, border-color .2s;
+  }
+  .card:hover { transform: translateY(-2px); border-color: #2a3b5c; }
+  .card .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .card .title { font-weight: 700; font-size: 16px; }
+  .card .body { color: var(--muted); font-size: 14px; margin-top: 8px; }
+  .card .proof { margin-top: 12px; font-size: 12px; color: #c7cdd8; }
+  .card .proof a { text-decoration: none; }
+  .badge {
+    font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    padding: 4px 8px; border-radius: 999px; border: 1px solid var(--border); color: var(--muted);
+    background: var(--surface-2);
+  }
+  .badge.danger { color: var(--danger); border-color: #5c1f1f; background: rgba(255,77,79,.08); }
+  .badge.warn { color: var(--warn); border-color: #5c4a1a; background: rgba(255,197,61,.08); }
+  .badge.ok { color: var(--ok); border-color: #174d3a; background: rgba(39,193,147,.08); }
+
+  .checklist { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .check {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 16px;
+    display: flex; gap: 14px; align-items: flex-start;
+  }
+  .check .icon {
+    width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center;
+    background: linear-gradient(135deg, rgba(0,194,168,.18), rgba(0,166,255,.18)); color: var(--accent);
+    font-weight: 800; flex-shrink: 0;
+  }
+  .check .text { font-size: 14px; color: #d6dce6; }
+  .check .text strong { color: var(--ink); }
+  .check .source { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .check .source a { color: #9fb3c8; text-decoration: none; }
+
+  .cta {
+    margin: 28px 0; padding: 18px; border-radius: 18px; border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(22,32,51,.95), rgba(11,18,32,.6));
+  }
+  .cta ol { margin: 8px 0 0 18px; padding: 0; color: #d6dce6; }
+  .cta li { margin: 6px 0; }
+
+  .sources { padding: 12px 0 60px; }
+  .sources ul { margin: 10px 0 0 18px; padding: 0; color: #c7cdd8; font-size: 13px; }
+  .sources li { margin: 6px 0; }
+  .sources a { color: #9fb3c8; text-decoration: none; }
+
+  @media (max-width: 860px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .cards { grid-template-columns: 1fr; }
+    .card { grid-column: span 1; }
+    .checklist { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div id="app" class="container">
+  <header class="site">
+    <div class="brand">
+      <div class="mark">CB</div>
+      <div>Кібербяспека для бухгалтара</div>
+    </div>
+    <div class="pill"><span class="dot"></span> 2026 · база з крыніцамі</div>
+  </header>
+
+  <section class="hero">
+    <h1>5 пунктаў, якія абараняюць грошы і рэпутацыю фірмы ў 2026 годзе</h1>
+    <p class="sub">Не «нейкія там хакеры», а зваротна адлічныя статыстыкі. Кожны пункт мае лік, сцэнар і абавязковую дзеянне.</p>
+    <div class="stats">
+      <div class="stat"><div class="num">$893M</div><div class="label">FBI IC3 2025: першы раз AI-фрод выдзелены асобна</div></div>
+      <div class="stat"><div class="num">22 364</div><div class="label">скарогаў з AI-кампанентам у 2025 годзе</div></div>
+      <div class="stat"><div class="num">×4</div><div class="label">AI-пісьмы перамагаюць частэй за людзскія</div></div>
+      <div class="stat"><div class="num">3 сек</div><div class="label">дастаткова аўдыё, каб клонаваць голас</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Што гэта значыць для Вас прама зараз</h2>
+    <div class="cards">
+      <div class="card" v-for="item in items" :key="item.id">
+        <div class="top">
+          <div class="title">{{ item.title }}</div>
+          <span class="badge" :class="item.badge">{{ item.badgeLabel }}</span>
+        </div>
+        <div class="body">{{ item.body }}</div>
+        <div class="proof">Крыніца: <a :href="item.url" target="_blank" rel="noopener">{{ item.source }}</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Правілы, якія працуюць у 2026</h2>
+    <div class="checklist">
+      <div class="check" v-for="rule in rules" :key="rule.title">
+        <div class="icon">{{ rule.icon }}</div>
+        <div>
+          <div class="text" v-html="rule.text"></div>
+          <div class="source"><a :href="rule.url" target="_blank" rel="noopener">{{ rule.source }}</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>План на сёння: ~30 хвілін</h2>
+    <div class="cta">
+      <div style="font-weight:700">Выканайце па парадку — не пакуль не зламалі, а пакуль не заплацілі:</div>
+      <ol>
+        <li v-for="step in steps" :key="step">{{ step }}</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sources">
+    <h2>Зыходныя дадзеныя</h2>
+    <ul>
+      <li v-for="s in sources" :key="s"><a :href="s" target="_blank" rel="noopener">{{ s }}</a></li>
+    </ul>
+  </section>
+</div>
+
+<script>
+const app = Vue.createApp({
+  data () {
+    return {
+      items: [
+        {
+          id: 1,
+          title: 'AI-фрод мае ўласную катэгорыю ў ФБР',
+          badge: 'danger',
+          badgeLabel: 'FBI IC3 2025',
+          body: '22 364 скаргі, $893 млн страт. $30 млн — ужо AI-компонента BEC, калі голас кіраўніка або кліента клонуюць і просяць перавесці грошы.',
+          source: 'FBI IC3 2025 Annual Report',
+          url: 'https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf'
+        },
+        {
+          id: 2,
+          title: 'Пісьмы перамагаюць у 4 разы чашэй',
+          badge: 'warn',
+          badgeLabel: 'IBM X-Force 2025',
+          body: 'Старая прымета «дрэнная граматыка» больш не працуе. Сёння AI піша падonyх у стылі конкретнага чалавека з вашага LinkedIn і пошты.',
+          source: 'IBM X-Force / How to spot phishing 2026',
+          url: 'https://sudotool.com/blog/how-to-spot-a-phishing-email'
+        },
+        {
+          id: 3,
+          title: 'Голас клонуюць з 3 секунд аўдыё',
+          badge: 'danger',
+          badgeLabel: 'Keepnet / FBI',
+          body: 'У 2025 гледжаньне глыбокага фейка ў стала ўзросла на 1 600% за квартал. Фінансавы аддзел атрымлівае званок «ад кіраўніка» са 100% саundtrack.',
+          source: 'Axis Intelligence — AI Scam Statistics 2026',
+          url: 'https://axis-intelligence.com/ai-scam-statistics'
+        },
+        {
+          id: 4,
+          title: 'Слабы MFA — найбольш распаўсюджаная памылка',
+          badge: 'warn',
+          badgeLabel: 'Cisco Talos Q1 2026',
+          body: 'У 35% рэйдаў знайшлі праблемы з двухфактарнай аўтэнтыфікацыяй. SMS-код лёгка перахапіць або перакінуць; трэба аўENTSікатар або ключ.',
+          source: 'Cisco Talos Q1 2026 report summary',
+          url: 'https://network-switch.com/blogs/news/ciscos-week-of-warnings-and-breakthroughs'
+        },
+        {
+          id: 5,
+          title: 'Пацыенты эксплуатуюцца за гадзіны, не дні',
+          badge: 'ok',
+          badgeLabel: 'ENISA 2025–2026',
+          body: 'ENISA пацвярджае: час ад выяўлення CVE да яго выкарыстання згарэў з месяцаў да гадзін. Калі не абнаўляеш сістэмы — ты стаўшы мэтай.',
+          source: 'ENISA Threat Landscape 2025',
+          url: 'https://www.enisa.europa.eu/sites/default/files/2026-01/ENISA%20Threat%20Landscape%202025_v1.2.pdf'
+        }
+      ],
+      rules: [
+        {
+          icon: '1',
+          text: '<strong>Паролі — кожны сэрвіс асобна.</strong> Усталюйце Bitwarden, ніколі не паўтарайце пароль. Майстар-пароль не запісвайце нідзе.',
+          source: 'GitHub Docs — Best practices for securing accounts',
+          url: 'https://docs.github.com/en/code-security/tutorials/implement-supply-chain-best-practices/securing-accounts'
+        },
+        {
+          icon: '2',
+          text: '<strong>MFA ўсюды.</strong> Павелічэнне абароны — да 99,9%. Калі хтосьці просіт код па тэлефоне — гэта не паслугой, гэта ўзлом.',
+          source: 'Microsoft / GitHub — 2FA guidance',
+          url: 'https://docs.github.com/en/code-security/tutorials/implement-supply-chain-best-practices/securing-accounts'
+        },
+        {
+          icon: '3',
+          text: '<strong>Голас кіраўніка не доказ.</strong> Кожны плацеж больш за 1 000 бел.руб./EUR/USD — пацвярджэнне па вядомаму нумару або асоба.',
+          source: 'Vorp Labs — AI Scam & Fraud Tracker 2026',
+          url: 'https://vorplabs.com/ai-scam-and-fraud-tracker'
+        },
+        {
+          icon: '4',
+          text: '<strong>Не адкрывайце нечаканыя файлы.</strong> .zip/.rar/.exe — толькі калі чакалі сёння. Дамен правярайце ўручную, не праз лістык.',
+          source: 'Verizon DBIR + IBM X-Force 2025',
+          url: 'https://ministryofcyberaffairs.com/news/phishing-explained'
+        },
+        {
+          icon: '5',
+          text: '<strong>Абнаўленні і рэзервовыя копіі.</strong> macOS/Windows/Android/iOS — аўтаабнаўленне. Файлы — копія раз на месяц на вонкавы дыск або воблака з асобным паролем.',
+          source: 'ENISA Frontier AI 2026 / Health-ISAC briefing',
+          url: 'https://health-isac.org/health-isac-hacking-healthcare-7-16-2026'
+        }
+      ],
+      steps: [
+        'Усталюй Bitwarden на тэлефон — 10 хвілін',
+        'Уключы MFA ў пошце, банку, 1С/CRM — 10 хвілін',
+        'Раскажы каадміністратарам правіла «не адкрываць нечаканыя файлы» — 5 хвілін',
+        'Запішы фразу: «Голас кіраўніка не доказ» — 1 хвіліна',
+        'Правер абнаўленні на ўсіх прыладах — 5 хвілін'
+      ],
+      sources: [
+        'https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf',
+        'https://sudotool.com/blog/how-to-spot-a-phishing-email',
+        'https://axis-intelligence.com/ai-scam-statistics',
+        'https://network-switch.com/blogs/news/ciscos-week-of-warnings-and-breakthroughs',
+        'https://www.enisa.europa.eu/sites/default/files/2026-01/ENISA%20Threat%20Landscape%202025_v1.2.pdf',
+        'https://innovirtuoso.com/cybersecurity/enisas-international-strategy-2026-a-practical-guide-to-ai-security-zero-trust-for-machine-identities-and-global-cyber-defense',
+        'https://ministryofcyberaffairs.com/news/phishing-explained',
+        'https://health-isac.org/health-isac-hacking-healthcare-7-16-2026',
+        'https://docs.github.com/en/code-security/tutorials/implement-supply-chain-best-practices/securing-accounts',
+        'https://vorplabs.com/ai-scam-and-fraud-tracker'
+      ]
+    }
+  }
+}).mount('#app');
+</script>
+</body>
+</html>
