@@ -50,9 +50,7 @@
   }
   .pill .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(39,193,147,.25); }
 
-  .hero {
-    padding: 56px 0 24px;
-  }
+  .hero { padding: 56px 0 24px; }
   .hero h1 {
     font-size: clamp(28px, 4.2vw, 48px);
     line-height: 1.1; font-weight: 800; letter-spacing: -.02em; margin: 0 0 14px;
@@ -193,110 +191,116 @@
 </div>
 
 <script>
-const app = Vue.createApp({
-  data () {
-    return {
-      items: [
-        {
-          id: 1,
-          title: 'AI-фрод мае ўласную катэгорыю ў ФБР',
-          badge: 'danger',
-          badgeLabel: 'FBI IC3 2025',
-          body: '22 364 скаргі, $893 млн страт. $30 млн — ужо AI-компонента BEC, калі голас кіраўніка або кліента клонуюць і просяць перавесці грошы.',
-          source: 'FBI IC3 2025 Annual Report',
-          url: 'https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf'
-        },
-        {
-          id: 2,
-          title: 'Пісьмы перамагаюць у 4 разы чашэй',
-          badge: 'warn',
-          badgeLabel: 'IBM X-Force 2025',
-          body: 'Старая прымета «дрэнная граматыка» больш не працуе. Сёння AI піша падonyх у стылі конкретнага чалавека з вашага LinkedIn і пошты.',
-          source: 'IBM X-Force / How to spot phishing 2026',
-          url: 'https://sudotool.com/blog/how-to-spot-a-phishing-email'
-        },
-        {
-          id: 3,
-          title: 'Голас клонуюць з 3 секунд аўдыё',
-          badge: 'danger',
-          badgeLabel: 'Keepnet / FBI',
-          body: 'У 2025 гледжаньне глыбокага фейка ў стала ўзросла на 1 600% за квартал. Фінансавы аддзел атрымлівае званок «ад кіраўніка» са 100% саundtrack.',
-          source: 'Axis Intelligence — AI Scam Statistics 2026',
-          url: 'https://axis-intelligence.com/ai-scam-statistics'
-        },
-        {
-          id: 4,
-          title: 'Слабы MFA — найбольш распаўсюджаная памылка',
-          badge: 'warn',
-          badgeLabel: 'Cisco Talos Q1 2026',
-          body: 'У 35% рэйдаў знайшлі праблемы з двухфактарнай аўтэнтыфікацыяй. SMS-код лёгка перахапіць або перакінуць; трэба аўENTSікатар або ключ.',
-          source: 'Cisco Talos Q1 2026 report summary',
-          url: 'https://network-switch.com/blogs/news/ciscos-week-of-warnings-and-breakthroughs'
-        },
-        {
-          id: 5,
-          title: 'Пацыенты эксплуатуюцца за гадзіны, не дні',
-          badge: 'ok',
-          badgeLabel: 'ENISA 2025–2026',
-          body: 'ENISA пацвярджае: час ад выяўлення CVE да яго выкарыстання згарэў з месяцаў да гадзін. Калі не абнаўляеш сістэмы — ты стаўшы мэтай.',
-          source: 'ENISA Threat Landscape 2025',
-          url: 'https://www.enisa.europa.eu/sites/default/files/2026-01/ENISA%20Threat%20Landscape%202025_v1.2.pdf'
-        }
-      ],
-      rules: [
-        {
-          icon: '1',
-          text: '<strong>Паролі — кожны сэрвіс асобна.</strong> Усталюйце Bitwarden, ніколі не паўтарайце пароль. Майстар-пароль не запісвайце нідзе.',
-          source: 'GitHub Docs — Best practices for securing accounts',
-          url: 'https://docs.github.com/en/code-security/tutorials/implement-supply-chain-best-practices/securing-accounts'
-        },
-        {
-          icon: '2',
-          text: '<strong>MFA ўсюды.</strong> Павелічэнне абароны — да 99,9%. Калі хтосьці просіт код па тэлефоне — гэта не паслугой, гэта ўзлом.',
-          source: 'Microsoft / GitHub — 2FA guidance',
-          url: 'https://docs.github.com/en/code-security/tutorials/implement-supply-chain-best-practices/securing-accounts'
-        },
-        {
-          icon: '3',
-          text: '<strong>Голас кіраўніка не доказ.</strong> Кожны плацеж больш за 1 000 бел.руб./EUR/USD — пацвярджэнне па вядомаму нумару або асоба.',
-          source: 'Vorp Labs — AI Scam & Fraud Tracker 2026',
-          url: 'https://vorplabs.com/ai-scam-and-fraud-tracker'
-        },
-        {
-          icon: '4',
-          text: '<strong>Не адкрывайце нечаканыя файлы.</strong> .zip/.rar/.exe — толькі калі чакалі сёння. Дамен правярайце ўручную, не праз лістык.',
-          source: 'Verizon DBIR + IBM X-Force 2025',
-          url: 'https://ministryofcyberaffairs.com/news/phishing-explained'
-        },
-        {
-          icon: '5',
-          text: '<strong>Абнаўленні і рэзервовыя копіі.</strong> macOS/Windows/Android/iOS — аўтаабнаўленне. Файлы — копія раз на месяц на вонкавы дыск або воблака з асобным паролем.',
-          source: 'ENISA Frontier AI 2026 / Health-ISAC briefing',
-          url: 'https://health-isac.org/health-isac-hacking-healthcare-7-16-2026'
-        }
-      ],
-      steps: [
-        'Усталюй Bitwarden на тэлефон — 10 хвілін',
-        'Уключы MFA ў пошце, банку, 1С/CRM — 10 хвілін',
-        'Раскажы каадміністратарам правіла «не адкрываць нечаканыя файлы» — 5 хвілін',
-        'Запішы фразу: «Голас кіраўніка не доказ» — 1 хвіліна',
-        'Правер абнаўленні на ўсіх прыладах — 5 хвілін'
-      ],
-      sources: [
-        'https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf',
-        'https://sudotool.com/blog/how-to-spot-a-phishing-email',
-        'https://axis-intelligence.com/ai-scam-statistics',
-        'https://network-switch.com/blogs/news/ciscos-week-of-warnings-and-breakthroughs',
-        'https://www.enisa.europa.eu/sites/default/files/2026-01/ENISA%20Threat%20Landscape%202025_v1.2.pdf',
-        'https://innovirtuoso.com/cybersecurity/enisas-international-strategy-2026-a-practical-guide-to-ai-security-zero-trust-for-machine-identities-and-global-cyber-defense',
-        'https://ministryofcyberaffairs.com/news/phishing-explained',
-        'https://health-isac.org/health-isac-hacking-healthcare-7-16-2026',
-        'https://docs.github.com/en/code-security/tutorials/implement-supply-chain-best-practices/securing-accounts',
-        'https://vorplabs.com/ai-scam-and-fraud-tracker'
-      ]
-    }
+document.addEventListener('DOMContentLoaded', function () {
+  if (!window.Vue) {
+    document.getElementById('app').insertAdjacentHTML('beforeend', '<p style="color:#ff4d4f">Vue не загрузіўся.</p>');
+    return;
   }
-}).mount('#app');
+  Vue.createApp({
+    data () {
+      return {
+        items: [
+          {
+            id: 1,
+            title: 'AI-фрод мае ўласную катэгорыю ў ФБР',
+            badge: 'danger',
+            badgeLabel: 'FBI IC3 2025',
+            body: '22 364 скаргі, $893 млн страт. $30 млн — ужо AI-компонента BEC, калі голас кіраўніка або кліента клонуюць і просяць перавесці грошы.',
+            source: 'FBI IC3 2025 Annual Report',
+            url: 'https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf'
+          },
+          {
+            id: 2,
+            title: 'Пісьмы перамагаюць у 4 разы чашэй',
+            badge: 'warn',
+            badgeLabel: 'IBM X-Force 2025',
+            body: 'Старая прымета «дрэнная граматыка» больш не працуе. Сёння AI піша падonyх у стылі конкретнага чалавека з вашага LinkedIn і пошты.',
+            source: 'IBM X-Force / How to spot phishing 2026',
+            url: 'https://sudotool.com/blog/how-to-spot-a-phishing-email'
+          },
+          {
+            id: 3,
+            title: 'Голас клонуюць з 3 секунд аўдыё',
+            badge: 'danger',
+            badgeLabel: 'Keepnet / FBI',
+            body: 'У 2025 гледжаньне глыбокага фейка ў стала ўзросла на 1 600% за квартал. Фінансавы аддзел атрымлівае званок «ад кіраўніка» са 100% саundtrack.',
+            source: 'Axis Intelligence — AI Scam Statistics 2026',
+            url: 'https://axis-intelligence.com/ai-scam-statistics'
+          },
+          {
+            id: 4,
+            title: 'Слабы MFA — найбольш распаўсюджаная памылка',
+            badge: 'warn',
+            badgeLabel: 'Cisco Talos Q1 2026',
+            body: 'У 35% рэйдаў знайшлі праблемы з двухфактарнай аўтэнтыфікацыяй. SMS-код лёгка перахапіць або перакінуць; трэба аўENTSікатар або ключ.',
+            source: 'Cisco Talos Q1 2026 report summary',
+            url: 'https://network-switch.com/blogs/news/ciscos-week-of-warnings-and-breakthroughs'
+          },
+          {
+            id: 5,
+            title: 'Пацыенты эксплуатуюцца за гадзіны, не дні',
+            badge: 'ok',
+            badgeLabel: 'ENISA 2025–2026',
+            body: 'ENISA пацвярджае: час ад выяўлення CVE да яго выкарыстання згарэў з месяцаў да гадзін. Калі не абнаўляеш сістэмы — ты стаўшы мэтай.',
+            source: 'ENISA Threat Landscape 2025',
+            url: 'https://www.enisa.europa.eu/sites/default/files/2026-01/ENISA%20Threat%20Landscape%202025_v1.2.pdf'
+          }
+        ],
+        rules: [
+          {
+            icon: '1',
+            text: '<strong>Паролі — кожны сэрвіс асобна.</strong> Усталюйце Bitwarden, ніколі не паўтарайце пароль. Майстар-пароль не запісвайце нідзе.',
+            source: 'GitHub Docs — Best practices for securing accounts',
+            url: 'https://docs.github.com/en/code-security/tutorials/implement-supply-chain-best-practices/securing-accounts'
+          },
+          {
+            icon: '2',
+            text: '<strong>MFA ўсюды.</strong> Павелічэнне абароны — да 99,9%. Калі хтосьці просіт код па тэлефоне — гэта не паслугой, гэта ўзлом.',
+            source: 'Microsoft / GitHub — 2FA guidance',
+            url: 'https://docs.github.com/en/code-security/tutorials/implement-supply-chain-best-practices/securing-accounts'
+          },
+          {
+            icon: '3',
+            text: '<strong>Голас кіраўніка не доказ.</strong> Кожны плацеж больш за 1 000 бел.руб./EUR/USD — пацвярджэнне па вядомаму нумару або асоба.',
+            source: 'Vorp Labs — AI Scam & Fraud Tracker 2026',
+            url: 'https://vorplabs.com/ai-scam-and-fraud-tracker'
+          },
+          {
+            icon: '4',
+            text: '<strong>Не адкрывайце нечаканыя файлы.</strong> .zip/.rar/.exe — толькі калі чакалі сёння. Дамен правярайце ўручную, не праз лістык.',
+            source: 'Verizon DBIR + IBM X-Force 2025',
+            url: 'https://ministryofcyberaffairs.com/news/phishing-explained'
+          },
+          {
+            icon: '5',
+            text: '<strong>Абнаўленні і рэзервовыя копіі.</strong> macOS/Windows/Android/iOS — аўтаабнаўленне. Файлы — копія раз на месяц на вонкавы дыск або воблака з асобным паролем.',
+            source: 'ENISA Frontier AI 2026 / Health-ISAC briefing',
+            url: 'https://health-isac.org/health-isac-hacking-healthcare-7-16-2026'
+          }
+        ],
+        steps: [
+          'Усталюй Bitwarden на тэлефон — 10 хвілін',
+          'Уключы MFA ў пошце, банку, 1С/CRM — 10 хвілін',
+          'Раскажы каадміністратарам правіла «не адкрываць нечаканыя файлы» — 5 хвілін',
+          'Запішы фразу: «Голас кіраўніка не доказ» — 1 хвіліна',
+          'Правер абнаўленні на ўсіх прыладах — 5 хвілін'
+        ],
+        sources: [
+          'https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf',
+          'https://sudotool.com/blog/how-to-spot-a-phishing-email',
+          'https://axis-intelligence.com/ai-scam-statistics',
+          'https://network-switch.com/blogs/news/ciscos-week-of-warnings-and-breakthroughs',
+          'https://www.enisa.europa.eu/sites/default/files/2026-01/ENISA%20Threat%20Landscape%202025_v1.2.pdf',
+          'https://innovirtuoso.com/cybersecurity/enisas-international-strategy-2026-a-practical-guide-to-ai-security-zero-trust-for-machine-identities-and-global-cyber-defense',
+          'https://ministryofcyberaffairs.com/news/phishing-explained',
+          'https://health-isac.org/health-isac-hacking-healthcare-7-16-2026',
+          'https://docs.github.com/en/code-security/tutorials/implement-supply-chain-best-practices/securing-accounts',
+          'https://vorplabs.com/ai-scam-and-fraud-tracker'
+        ]
+      }
+    }
+  }).mount('#app');
+});
 </script>
 </body>
 </html>
